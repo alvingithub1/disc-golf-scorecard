@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disc Golf Scorecard</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <h1>Disc Golf Scorecard</h1>
+    <a href="index.html" class="loginLinks">Home</a>
+    <h2>Hole #<label id="holeNumber">1</label></h2>
+
+<div class="scoreTracker">
+        <button id="backButton" onclick="decNumber()"><</button>
+        <label id="display">3</label>
+        <button id="nextButton" onclick="incNumber()">></button>
+</div>
+
+
+<div class="submitScore">
+    <button id="submitButton" onclick="submit()">Submit</button>
+<!--
+    <button id="nextHole" onclick="incHoleNumber()">Next Hole</button>
+    -->
+    <button id="returnButton" onclick="decHoleNumber()">Back A Hole</button>
+    <button id="deleteButton" onclick="deleteButton()">Delete</button>
+
+    <button id="saveScorecard">Save Scorecard</button>
+</div>
+
+<table style="width: 100%" id="scorecardTable">
+    <tr>
+        <th id="scorecardTableHeader">Hole Number</th>
+        <th id="scorecardTableHeader">Score</th>
+    </tr>
+</table>
+
+<!------- Script when user adds/subtract score ------------->
+<script type="text/javascript">
+
+    var i = 3;
+
+    function incNumber() {
+        if (i < 10) {
+            i++;
+        } else if (i = 10) {
+            i = 0;
+        }
+        document.getElementById("display").innerHTML = i;
+    }
+
+    function decNumber() {
+        if (i > 0) {
+            --i;
+        } else if (i = 0) {
+            i = 10;
+        }
+        document.getElementById("display").innerHTML = i;
+    }
+</script>
+
+<!------- Script when user hits next/back ------------->
+<script>
+    var j = 1;
+    var k = 1;
+
+    function incHoleNumber() {
+        if (j < 18) {
+            j++;
+            document.getElementById("holeNumber").innerHTML = j;
+        }
+        }
+
+    function decHoleNumber() {
+        if (j > 1) {
+            j--;
+        }
+        document.getElementById("holeNumber").innerHTML = j;
+        var table = document.getElementById("scorecardTable").deleteRow(-1);
+
+    }
+</script>
+
+<!------- Script to add score to Scorecard ------------->
+<script>
+    var l = 1;
+    var j = 1;
+
+    function submit() {
+        var table = document.getElementById("scorecardTable");
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.innerHTML = j;
+        cell2.innerHTML = i;
+
+        if (j < 18) {
+            j++;
+            document.getElementById("holeNumber").innerHTML = j;
+        }
+    }
+</script>
+
+<!------- Script to delete score to Scorecard ------------->
+<script>
+function deleteButton() {
+    var table = document.getElementById("scorecardTable").deleteRow(-1);
+}
+</script>
+
+
+
+</body>
+</html>

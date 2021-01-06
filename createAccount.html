@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <h1>Create Account</h1>
+
+    <a href="index.html" class="loginLinks">Home</a>
+
+    <!--Form used to get Email, Password, Repeat Password, Buttons-->
+    <div class="createAccountContainer">
+        <p>Please fill in form to create an account.</p>
+ 
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" required>
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+        <label for="psw-repeat"><b>Repeat Password</b></label>
+        <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+
+        <!--Submit & Cancel buttons-->
+        <div class="buttons">
+        <button type="button" onclick="document.getElementById('id02').style.display='none'" class="submit">Submit</button>
+        <button type="button" onclick="window.location.href='index.html'" class="cancel">Cancel</button>
+        </div>
+    </div>
+
+    
+</body>
+</html>

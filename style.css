@@ -1,0 +1,104 @@
+h1 {
+    text-align: center;
+}
+
+body {
+    background-color: lightblue;
+    background-image: url("disc-golf-basket.png");
+    background-repeat: no-repeat;
+    background-position: center top;
+}
+
+.loginLinks {
+    text-decoration: none;
+    padding: 10px 1px;
+    background-color: white;
+    text-align: center;
+    display: block;
+    border: 1px solid black;
+    width: 120px;
+    margin: 1em 0; 
+}
+
+a:hover {
+    background-color: lightgray;
+}
+
+.createAccountHyperlink {
+    text-decoration: none;
+
+}
+
+/* Section used for createAccount.html */
+.createAccountContainer {
+    border: 3px outset black;
+    text-align: left;
+    background-color: white;
+    opacity: 0.9;
+    padding: 5px 40px;
+    margin: auto;
+    width: 350px;
+}
+
+input[type=text], input[type=password] {
+    background: #dfd6d6;
+    padding: 6px;
+    border: none;
+    display: inline-block;
+    width: 100%;
+    margin: 5px 0 22px 0;
+
+}
+
+.submit,.cancel {
+    border-color: green;
+    background-color: lightblue;
+    border: none;
+    padding: 8px;
+    margin: 10px;
+    width: 100px;
+    font-weight: bold;
+}
+/***************************************/
+
+/* Section used for scorecard.html */
+
+#backButton, #nextButton, #score {
+    padding: 15px;
+    text-align: center;
+}
+
+.scoreTracker {
+    display: flex;
+    justify-content: center;
+}
+
+#backButton, #nextButton {
+    font-weight: bold;
+}
+
+#display {
+    font-size: 80px;
+    border: 5px;
+    margin: 0 20px 0;
+}
+
+#nextHole, #submitButton, #returnButton, #deleteButton {
+    margin: auto;
+    display: block;
+    padding: 4px;
+    width: 90px;
+    margin-top: 20px;
+}
+
+h2 {
+    text-align: center;
+}
+
+#scorecardTable, th, td {
+    text-align: center;
+    border: 1px solid black;
+}
+
+
+/***************************************/
