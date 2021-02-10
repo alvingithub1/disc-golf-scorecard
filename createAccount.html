@@ -6,30 +6,109 @@
     <title>Create Account</title>
     <link rel="stylesheet" href="style.css">
 
+    <script src="js/config.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> 
+    <script src="js/amazon-cognito-auth.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+  	<script src="js/amazon-cognito-identity.min.js"></script> 
+  
+
 </head>
 <body>
-    <h1>Create Account</h1>
+    <h1 id="titleheader">Create Account</h1>
 
     <a href="index.html" class="loginLinks">Home</a>
 
     <!--Form used to get Email, Password, Repeat Password, Buttons-->
     <div class="createAccountContainer">
         <p>Please fill in form to create an account.</p>
- 
-        <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-        <label for="psw-repeat"><b>Repeat Password</b></label>
-        <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
 
-        <!--Submit & Cancel buttons-->
+		<!--
+        <label for="name"><b>Name</b></label>
+        <input type="text" id="personalnameRegister" placeholder="Enter name" name="email" required> 
+        <label for="email"><b>Email</b></label>
+        <input type="text" id="emailInputRegister" placeholder="Enter Email" name="email" required>
+        <label for="psw"><b>Password</b></label>
+        <input type="password" id="passwordInputRegister" placeholder="Enter Password" name="psw" required>
+        <label for="psw-repeat"><b>Repeat Password</b></label>
+        <input type="password" id="confirmationpassword" placeholder="Repeat Password" name="psw-repeat" required>
+
+
+
+        Submit & Cancel buttons
         <div class="buttons">
-        <button type="button" onclick="document.getElementById('id02').style.display='none'" class="submit">Submit</button>
+        <button type="button" onclick="registerButton()" class="submit">Submit</button>
         <button type="button" onclick="window.location.href='index.html'" class="cancel">Cancel</button>
-        </div>
+		</div>
+	-->
+
+	<input type="personalname" class="form-control" id="personalnameRegister" placeholder="Name" pattern=".*" required>
+    <input type="email" class="form-control" id="emailInputRegister" placeholder="Email" pattern=".*" required>
+	<input type="password" class="form-control" id="passwordInputRegister" placeholder="Password" pattern=".*" required>
+    <input type="password" class="form-control" id="confirmationpassword" placeholder="Confirm Password" pattern=".*" required>
+	<button id="mainbutton" class="btn btn-lg btn-primary btn-block" type="button" onclick="registerButton()" >Register</button>
     </div>
 
-    
+
+	<script>
+
+		var username;
+		var password;
+		var personalname;
+		var poolData;
+			
+	  function registerButton() {
+		
+		personalnamename =  document.getElementById("personalnameRegister").value;	
+		username = document.getElementById("emailInputRegister").value;
+		
+		if (document.getElementById("passwordInputRegister").value != document.getElementById("confirmationpassword").value) {
+			alert("Passwords Do Not Match!")
+			throw "Passwords Do Not Match!"
+		} else {
+			password =  document.getElementById("passwordInputRegister").value;	
+		}
+		
+		poolData = {
+				UserPoolId : _config.cognito.userPoolId, // Your user pool id here
+				ClientId : _config.cognito.clientId // Your client id here
+			};		
+		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+
+		var attributeList = [];
+		
+		var dataEmail = {
+			Name : 'email', 
+			Value : username, //get from form field
+		};
+		
+		var dataPersonalName = {
+			Name : 'name', 
+			Value : personalname, //get from form field
+		};
+
+		var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
+		var attributePersonalName = new AmazonCognitoIdentity.CognitoUserAttribute(dataPersonalName);
+		
+		
+		attributeList.push(attributeEmail);
+		attributeList.push(attributePersonalName);
+
+		userPool.signUp(username, password, attributeList, null, function(err, result){
+			if (err) {
+				alert(err.message || JSON.stringify(err));
+				return;
+			}
+			cognitoUser = result.user;
+			console.log('user name is ' + cognitoUser.getUsername());
+			//change elements of page
+			document.getElementById("titleheader").innerHTML = "Check your email for a verification link";
+			
+		});
+	  }
+
+	</script>
+
+
 </body>
 </html>

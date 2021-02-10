@@ -2,30 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="style.css">
+
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> 
+	<script src="js/amazon-cognito-auth.min.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+	<script src="js/amazon-cognito-identity.min.js"></script>   
+	<script src="js/config.js"></script>
+
+    
 </head>
 <body>
     <h1>Login to Account</h1>
 
     <a href="index.html" class="loginLinks">Home</a>
 
-    <div class="createAccountContainer">
-
-        <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me</label>
+    <form>
+        <input type="text" id="inputUsername"  placeholder="Email address" name="username" required autofocus>
+        <input type="password" id="inputPassword"  placeholder="Password" name="password" required>    
+        <button type="button" onclick="signInButton()">Sign in</button>
+  
         <p>Do not have an account? Click <a href="createAccount.html" class="createAccountHyperlink">here</a> to create an account.</p>
 
-        <!--Submit & Cancel buttons-->
-        <div class="buttons">
-        <button type="button" onclick="document.getElementById('id02').style.display='none'" class="submit">Submit</button>
-        <button type="button" onclick="window.location.href='index.html'" class="cancel">Cancel</button>
-        </div>
-    </div>
+    </form>
+
+<script>
+
+
+
+  function signInButton() {
+
+    
+	var authenticationData = {
+        Username : document.getElementById("inputUsername").value,
+        Password : document.getElementById("inputPassword").value,
+    };
+	
+    var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+    
+	var poolData = {
+        UserPoolId : _config.cognito.userPoolId, // Your user pool id here
+        ClientId : _config.cognito.clientId, // Your client id here
+    };
+	
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+	
+    var userData = {
+        Username : document.getElementById("inputUsername").value,
+        Pool : userPool,
+    };
+	
+    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    
+	cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: function (result) {
+			var accessToken = result.getAccessToken().getJwtToken();
+            console.log(accessToken);	
+            window.location='welcome.html';
+        },
+
+        onFailure: function(err) {
+            alert(err.message || JSON.stringify(err));
+        },
+    });
+  }
+</script>
+
 
 </body>
 </html>
